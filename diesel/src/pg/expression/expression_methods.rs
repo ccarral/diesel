@@ -858,6 +858,15 @@ pub trait PgRangeExpressionMethods: Expression + Sized {
     {
         Grouped(IsContainedBy::new(self, other.as_expression()))
     }
+
+    /// Whoop whoop
+    fn range_not_extends_right_to<T>(self, other: T) -> dsl::RangeNotExtendsRightTo<Self, T>
+    where
+        Self::SqlType: SqlType,
+        T: AsExpression<Self::SqlType>,
+    {
+        Grouped(NotExtendsRightTo::new(self, other.as_expression()))
+    }
 }
 
 impl<T> PgRangeExpressionMethods for T

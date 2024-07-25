@@ -281,9 +281,15 @@ fn test_pg_jsonb_expression_methods() -> _ {
 fn test_pg_range_expression_methods() -> _ {
     let my_range: (Bound<i32>, Bound<i32>) = (Bound::Included(2), Bound::Included(7));
 
-    pg_extras::range
+    let query = pg_extras::range
         .contains_range(my_range)
         .and(pg_extras::range.is_contained_by(my_range))
+        .and(pg_extras::range.range_not_extends_right_to(my_range));
+    let debug = diesel::debug_query::<diesel::pg::Pg, _>(&query);
+    println!("|||||||||||||||||||||||||||||||||||||||||||");
+    dbg!(&debug);
+    query
+
     // `.contains()` cannot be supported here as
     // the type level constraints are slightly different
     // for `Range<>` than for the other types that provide a `contains()`
