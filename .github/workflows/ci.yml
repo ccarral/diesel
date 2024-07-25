@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - master
+      - range-contains-element 
       - "0.[0-9]+.x"
       - "1.[0-9]+.x"
       - "2.[0-9]+.x"
